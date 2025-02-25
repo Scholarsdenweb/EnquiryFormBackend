@@ -23,13 +23,13 @@ const UserSchema = new mongoose.Schema({
     schoolName:{
         type: String,
     },
-    parentsName: {
+    fatherName: {
         type: String,
     },
-    parentsOccupations: {
+    fatherOccupations: {
         type: String,
     },
-    parentsContactNumber: {
+    fatherContactNumber: {
         type: String,
         required: true,
     },

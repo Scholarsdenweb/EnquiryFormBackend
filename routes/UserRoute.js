@@ -43,10 +43,10 @@ router.get("/getTokenNo", async (req, res) => {
 router.post("/", async (req, res) => {
 
   try {
-    const { studentName, email, phone: parentsContactNumber, parentsName } = req.body;
+    const { studentName, email, fatherContactNumber, fatherName } = req.body;
 
     // Check if user already exists
-    // const user = await User.findOne({ $or: [{ parentsContactNumber }, { email }] });
+    // const user = await User.findOne({ $or: [{ fatherContactNumber }, { email }] });
 
     // if (user) {
     //   return res.status(400).send("User already exists");
@@ -58,15 +58,15 @@ router.post("/", async (req, res) => {
     const newUser = new User({
       studentName,
       email,
-      parentsContactNumber,
-      parentsName
+      fatherContactNumber,
+      fatherName
 
     });
     await newUser.save();
 
     // Generate token
     const token = jwt.sign(
-      { _id: newUser._id, email: newUser.email, parentsContactNumber: newUser.parentsContactNumber },
+      { _id: newUser._id, email: newUser.email, fatherContactNumber: newUser.fatherContactNumber },
       JWT_SECRET,
     );
     res.status(200).send({ token, newUser });
@@ -81,12 +81,13 @@ router.post("/", async (req, res) => {
 router.patch("/putFormData", verifyToken(), async (req, res) => {
 
   try {
-    const { phone: studentContactNumber, program, courseOfIntrested,
+    const { studentContactNumber, program, courseOfIntrested,
       schoolName,
       fatherName,
       fatherOccupations,
       fatherContactNumber,
       city,
+      state,
       howToKnow,
       remarks,
       intime,
@@ -111,6 +112,7 @@ router.patch("/putFormData", verifyToken(), async (req, res) => {
         fatherOccupations,
         fatherContactNumber,
         city,
+        state,
         howToKnow,
         remarks,
         intime,
